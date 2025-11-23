@@ -1,0 +1,1454 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Que Hacer Hoy - Descubre experiencias cerca de ti</title>
+    <link rel="icon" type="image/png" href="app-icon.png">
+    <link rel="apple-touch-icon" href="app-icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #009743;
+            --primary-light: #00B550;
+            --primary-dark: #007A36;
+            --yellow: #F5C518;
+            --green: #1B7A4A;
+            --blue: #2E86AB;
+            --red: #C92A2A;
+            --black: #1A1A1A;
+            --white: #FFFFFF;
+            --gray-light: #F8F9FA;
+            --gray: #6B7280;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            color: var(--black);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 0.75rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s ease, padding 0.3s ease;
+        }
+
+        nav.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            padding: 0.5rem 2rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--white);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        nav.scrolled .logo {
+            color: var(--primary);
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+        }
+
+        .logo-icon-nav {
+            height: 50px;
+            width: auto;
+            object-fit: contain;
+            filter: brightness(0) invert(1);
+            transition: filter 0.3s ease, height 0.3s ease;
+        }
+
+        nav.scrolled .logo-icon-nav {
+            filter: none;
+            height: 45px;
+        }
+
+        .logo-full {
+            height: 80px;
+            width: auto;
+            object-fit: contain;
+            filter: brightness(0) invert(1);
+            transition: filter 0.3s ease;
+        }
+
+        nav.scrolled .logo-full {
+            filter: none;
+            height: 60px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        nav.scrolled .nav-links a {
+            color: var(--black);
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-light);
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            height: 100vh;
+            min-height: 750px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .video-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .video-container video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                135deg,
+                rgba(45, 182, 125, 0.85) 0%,
+                rgba(27, 122, 74, 0.9) 100%
+            );
+        }
+
+        .hero-content {
+            text-align: center;
+            color: var(--white);
+            max-width: 1000px;
+            padding: 2rem;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            letter-spacing: 0.5px;
+        }
+
+        .hero-question {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(3.5rem, 8vw, 5.5rem);
+            font-weight: 900;
+            margin-bottom: 0.5rem;
+            opacity: 1;
+            text-shadow: 3px 3px 12px rgba(0, 0, 0, 0.4);
+            letter-spacing: -0.02em;
+        }
+
+        .hero h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero h2 span {
+            color: var(--yellow);
+        }
+
+        .hero-actions {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(1.5rem, 4vw, 2.75rem);
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.3rem;
+            flex-wrap: wrap;
+        }
+
+        .hero-actions .word {
+            display: inline-block;
+            padding: 0.1em 0.2em;
+            border-radius: 8px;
+            transition: transform 0.3s ease, text-shadow 0.3s ease;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            cursor: pointer;
+        }
+
+        .hero-actions .word:hover {
+            transform: scale(1.08) translateY(-2px);
+        }
+
+        /* Auto-animate words on page load */
+        @keyframes wordPulse {
+            0%, 100% {
+                transform: scale(1) translateY(0);
+            }
+            50% {
+                transform: scale(1.15) translateY(-3px);
+            }
+        }
+
+        .hero-actions .word.animate {
+            animation: wordPulse 0.6s ease-in-out;
+        }
+
+        /* Category Colors for Words */
+        .hero-actions .word-social {
+            color: #FFD93D; /* Brighter yellow for visibility */
+        }
+
+        .hero-actions .word-familia {
+            color: #6BCB77; /* Brighter green for visibility */
+        }
+
+        .hero-actions .word-gastronomia {
+            color: #4FC3F7; /* Brighter blue for visibility */
+        }
+
+        .hero-actions .word-cultura {
+            color: #FF6B6B; /* Brighter red for visibility */
+        }
+
+        .hero-actions .word-aventura {
+            color: #FFFFFF;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+        }
+
+        .hero p {
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            opacity: 0.95;
+        }
+
+        .store-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .store-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: var(--white);
+            color: var(--black);
+            padding: 0.875rem 1.5rem;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.4s ease;
+        }
+
+        .store-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .store-btn svg {
+            width: 28px;
+            height: 28px;
+        }
+
+        .store-btn span {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            line-height: 1.2;
+        }
+
+        .store-btn .small {
+            font-size: 0.7rem;
+            font-weight: 400;
+            opacity: 0.7;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-10px); }
+            60% { transform: translateX(-50%) translateY(-5px); }
+        }
+
+        .scroll-indicator svg {
+            width: 32px;
+            height: 32px;
+            color: var(--white);
+            opacity: 0.8;
+        }
+
+        /* About Section */
+        .about {
+            padding: 6rem 2rem;
+            background: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg stroke='%23009743' stroke-opacity='0.05' stroke-width='1'%3E%3Cline x1='0' y1='30' x2='60' y2='30'/%3E%3Cline x1='30' y1='0' x2='30' y2='60'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            pointer-events: none;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-tag {
+            display: inline-block;
+            background: rgba(45, 182, 125, 0.1);
+            color: var(--primary);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .section-header h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            color: var(--black);
+            margin-bottom: 1rem;
+        }
+
+        .section-header p {
+            color: var(--gray);
+            max-width: 650px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+        }
+
+        /* Categories Section */
+        .categories {
+            padding: 6rem 2rem;
+            background: var(--gray-light);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .categories::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23009743' fill-opacity='0.05'%3E%3Cpath d='M30 25 L35 30 L30 35 L25 30 Z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            pointer-events: none;
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .category-card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .category-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+        }
+
+        .category-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .category-card.social::before { background: var(--yellow); }
+        .category-card.familia::before { background: var(--green); }
+        .category-card.gastronomia::before { background: var(--blue); }
+        .category-card.cultura::before { background: var(--red); }
+        .category-card.aventura::before { background: var(--black); }
+
+        .category-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.25rem;
+            background: transparent;
+        }
+
+        .category-icon img {
+            width: 55px;
+            height: 55px;
+            object-fit: contain;
+        }
+
+        .category-card.social .category-icon { background: rgba(245, 197, 24, 0.15); color: var(--yellow); }
+        .category-card.familia .category-icon { background: rgba(27, 122, 74, 0.15); color: var(--green); }
+        .category-card.gastronomia .category-icon { background: rgba(46, 134, 171, 0.15); color: var(--blue); }
+        .category-card.cultura .category-icon { background: rgba(201, 42, 42, 0.15); color: var(--red); }
+        .category-card.aventura .category-icon { background: rgba(26, 26, 26, 0.1); color: var(--black); }
+
+        .category-icon svg {
+            width: 32px;
+            height: 32px;
+        }
+
+        .category-card h3 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+
+        .category-card.social h3 { color: #C9A000; }
+        .category-card.familia h3 { color: var(--green); }
+        .category-card.gastronomia h3 { color: var(--blue); }
+        .category-card.cultura h3 { color: var(--red); }
+        .category-card.aventura h3 { color: var(--black); }
+
+        .category-card p {
+            color: var(--gray);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* Users Section */
+        .users {
+            padding: 6rem 2rem;
+            background: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .users::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23009743' fill-opacity='0.04'%3E%3Ccircle cx='40' cy='10' r='2'/%3E%3Ccircle cx='40' cy='40' r='2'/%3E%3Ccircle cx='40' cy='70' r='2'/%3E%3Ccircle cx='10' cy='25' r='2'/%3E%3Ccircle cx='10' cy='55' r='2'/%3E%3Ccircle cx='70' cy='25' r='2'/%3E%3Ccircle cx='70' cy='55' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            pointer-events: none;
+        }
+
+        .users-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .user-card {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            border-radius: 24px;
+            padding: 2.5rem;
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .user-card::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .user-card.business {
+            background: linear-gradient(135deg, var(--yellow) 0%, #E0A800 100%);
+            color: var(--black);
+        }
+
+        .user-card-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .user-card.business .user-card-icon {
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        .user-card-icon svg {
+            width: 28px;
+            height: 28px;
+        }
+
+        .user-card h3 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .user-card p {
+            opacity: 0.9;
+            line-height: 1.7;
+        }
+
+        .user-card .cta-btn {
+            display: inline-block;
+            margin-top: 1.5rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--white);
+            color: var(--primary);
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.3s ease;
+        }
+
+        .user-card.business .cta-btn {
+            color: var(--black);
+        }
+
+        .user-card .cta-btn:hover {
+            transform: translateX(5px);
+        }
+
+        /* CTA Section */
+        .cta {
+            padding: 6rem 2rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            text-align: center;
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            pointer-events: none;
+        }
+
+        .cta h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .cta p {
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            opacity: 0.9;
+            font-size: 1.1rem;
+            position: relative;
+        }
+
+        .cta .store-buttons {
+            position: relative;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--black);
+            color: var(--white);
+            padding: 3rem 2rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-full-footer {
+            height: 120px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-link {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            text-decoration: none;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .social-link svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            opacity: 0.6;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav {
+                padding: 1rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero-content {
+                padding: 1rem;
+            }
+
+            .hero-actions {
+                gap: 0.15rem;
+                font-size: clamp(1.25rem, 3.5vw, 2rem);
+            }
+
+            .categories-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .store-btn {
+                padding: 0.75rem 1.25rem;
+            }
+
+            .store-btn .text {
+                display: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-actions {
+                flex-direction: column;
+                gap: 0.1rem;
+            }
+
+            .categories-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .users-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Video Modal Styles */
+        .video-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .video-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .video-modal-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+            width: 800px;
+            background: var(--black);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .video-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            gap: 1rem;
+        }
+
+        .video-modal-title {
+            color: var(--white);
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 600;
+            flex: 1;
+        }
+
+        .video-modal-download {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .modal-store-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            color: var(--black);
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .modal-store-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+            background: rgba(255, 255, 255, 1);
+        }
+
+        .modal-store-btn svg {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+        }
+
+        .modal-store-btn .store-name {
+            display: none;
+        }
+
+        .video-modal-close {
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 1.5rem;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background 0.3s ease;
+            flex-shrink: 0;
+        }
+        .video-modal-close:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .video-container-modal {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%; /* 16:9 Aspect Ratio */
+            background: var(--black);
+        }
+
+        .video-container-modal video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .video-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .video-nav-btn {
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .video-nav-btn:hover {
+            background: var(--primary-light);
+            transform: translateY(-2px);
+        }
+
+        .video-nav-btn:disabled {
+            background: rgba(255, 255, 255, 0.1);
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .video-counter {
+            color: var(--white);
+            font-weight: 500;
+        }
+
+        .video-dots {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .video-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        .video-dot.active {
+            background: var(--primary);
+            transform: scale(1.2);
+        }
+
+        @media (max-width: 768px) {
+            .video-modal-content {
+                width: 95%;
+                max-width: 95%;
+            }
+
+            .video-nav-btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
+            }
+
+            .video-modal-title {
+                font-size: 1rem;
+            }
+
+            .video-modal-header {
+                padding: 0.75rem 1rem;
+            }
+
+            .modal-store-btn {
+                width: 36px;
+                height: 36px;
+            }
+
+            .modal-store-btn svg {
+                width: 18px;
+                height: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav id="navbar">
+        <a href="#" class="logo">
+            <img src="app-icon.png" alt="Que Hacer Hoy" class="logo-icon-nav">
+        </a>
+        <div class="nav-links">
+            <a href="#categorias">Categorías</a>
+            <a href="#usuarios">¿Para quién?</a>
+            <a href="#descargar">Descargar</a>
+        </div>
+    </nav>
+
+    <!-- Video Modal -->
+    <div class="video-modal" id="videoModal">
+        <div class="video-modal-content">
+            <div class="video-modal-header">
+                <h3 class="video-modal-title">¡Bienvenido a Que Hacer Hoy!</h3>
+                <div class="video-modal-download">
+                    <a href="https://play.google.com/store/apps/details?id=com.quehacerhoy.app" class="modal-store-btn" target="_blank" aria-label="Descargar en Google Play">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M3 20.5V3.5C3 2.91 3.34 2.39 3.84 2.15L13.69 12L3.84 21.85C3.34 21.6 3 21.09 3 20.5ZM16.81 15.12L6.05 21.34L14.54 12.85L16.81 15.12ZM20.16 10.81C20.5 11.08 20.75 11.5 20.75 12C20.75 12.5 20.53 12.9 20.18 13.18L17.89 14.5L15.39 12L17.89 9.5L20.16 10.81ZM6.05 2.66L16.81 8.88L14.54 11.15L6.05 2.66Z"/>
+                        </svg>
+                    </a>
+                    <a href="https://apps.apple.com/do/app/que-hacer-hoy/id6741241757" class="modal-store-btn" target="_blank" aria-label="Descargar en App Store">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M18.71 19.5C17.88 20.74 17 21.95 15.66 21.97C14.32 22 13.89 21.18 12.37 21.18C10.84 21.18 10.37 21.95 9.1 22C7.79 22.05 6.8 20.68 5.96 19.47C4.25 17 2.94 12.45 4.7 9.39C5.57 7.87 7.13 6.91 8.82 6.88C10.1 6.86 11.32 7.75 12.11 7.75C12.89 7.75 14.37 6.68 15.92 6.84C16.57 6.87 18.39 7.1 19.56 8.82C19.47 8.88 17.39 10.1 17.41 12.63C17.44 15.65 20.06 16.66 20.09 16.67C20.06 16.74 19.67 18.11 18.71 19.5ZM13 3.5C13.73 2.67 14.94 2.04 15.94 2C16.07 3.17 15.6 4.35 14.9 5.19C14.21 6.04 13.07 6.7 11.95 6.61C11.8 5.46 12.36 4.26 13 3.5Z"/>
+                        </svg>
+                    </a>
+                </div>
+                <button class="video-modal-close" id="closeModal" aria-label="Cerrar">✕</button>
+            </div>
+            <div class="video-container-modal">
+                <video id="modalVideo" controls autoplay>
+                    <source src="" type="video/mp4">
+                    Tu navegador no soporta la reproducción de video.
+                </video>
+            </div>
+            <div class="video-dots" id="videoDots"></div>
+            <div class="video-controls">
+                <button class="video-nav-btn" id="prevBtn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M15 18l-6-6 6-6"/>
+                    </svg>
+                    Anterior
+                </button>
+                <span class="video-counter">
+                    <span id="currentVideo">1</span> / <span id="totalVideos">2</span>
+                </span>
+                <button class="video-nav-btn" id="nextBtn">
+                    Siguiente
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 18l6-6-6-6"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="video-container">
+            <video autoplay muted loop playsinline poster="poster.jpg">
+                <source src="video.mp4" type="video/mp4">
+            </video>
+            <div class="video-overlay"></div>
+        </div>
+        
+        <div class="hero-content">
+            <h1 class="hero-question">¿Sin planes?</h1>
+            <h2>Descubre <span>qué hacer hoy</span></h2>
+            <div class="hero-actions">
+                <span class="word word-social">Conecta.</span>
+                <span class="word word-familia">Vive.</span>
+                <span class="word word-gastronomia">Prueba.</span>
+                <span class="word word-cultura">Aprende.</span>
+                <span class="word word-aventura">Explora.</span>
+            </div>
+            <p>Encuentra las mejores experiencias y actividades de entretenimiento cerca de ti. ¡Cada día es una nueva aventura!</p>
+            
+            <div class="hero-badge">🎉 Disponible en iOS y Android</div>
+            <div class="store-buttons">
+                <a href="https://play.google.com/store/apps/details?id=com.quehacerhoy.app" class="store-btn" target="_blank">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M3 20.5V3.5C3 2.91 3.34 2.39 3.84 2.15L13.69 12L3.84 21.85C3.34 21.6 3 21.09 3 20.5ZM16.81 15.12L6.05 21.34L14.54 12.85L16.81 15.12ZM20.16 10.81C20.5 11.08 20.75 11.5 20.75 12C20.75 12.5 20.53 12.9 20.18 13.18L17.89 14.5L15.39 12L17.89 9.5L20.16 10.81ZM6.05 2.66L16.81 8.88L14.54 11.15L6.05 2.66Z"/>
+                    </svg>
+                    <span>
+                        <span class="small">Disponible en</span>
+                        Google Play
+                    </span>
+                </a>
+                <a href="https://apps.apple.com/do/app/que-hacer-hoy/id6741241757" class="store-btn" target="_blank">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M18.71 19.5C17.88 20.74 17 21.95 15.66 21.97C14.32 22 13.89 21.18 12.37 21.18C10.84 21.18 10.37 21.95 9.1 22C7.79 22.05 6.8 20.68 5.96 19.47C4.25 17 2.94 12.45 4.7 9.39C5.57 7.87 7.13 6.91 8.82 6.88C10.1 6.86 11.32 7.75 12.11 7.75C12.89 7.75 14.37 6.68 15.92 6.84C16.57 6.87 18.39 7.1 19.56 8.82C19.47 8.88 17.39 10.1 17.41 12.63C17.44 15.65 20.06 16.66 20.09 16.67C20.06 16.74 19.67 18.11 18.71 19.5ZM13 3.5C13.73 2.67 14.94 2.04 15.94 2C16.07 3.17 15.6 4.35 14.9 5.19C14.21 6.04 13.07 6.7 11.95 6.61C11.8 5.46 12.36 4.26 13 3.5Z"/>
+                    </svg>
+                    <span>
+                        <span class="small">Disponible en</span>
+                        App Store
+                    </span>
+                </a>
+            </div>
+        </div>
+
+        <div class="scroll-indicator">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 5v14M5 12l7 7 7-7"/>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="categories" id="categorias">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Categorías</span>
+                <h2>Encuentra tu experiencia ideal</h2>
+                <p>Cinco categorías diseñadas para cada tipo de aventura. Desde salidas sociales hasta exploraciones culturales.</p>
+            </div>
+
+            <div class="categories-grid">
+                <div class="category-card social">
+                    <div class="category-icon">
+                        <img src="icon-social.svg" alt="Social" width="50" height="50">
+                    </div>
+                    <h3>Social</h3>
+                    <p>Afterworks, salidas nocturnas, reuniones con amigos y fiestas animadas. Perfecto para socializar.</p>
+                </div>
+
+                <div class="category-card familia">
+                    <div class="category-icon">
+                        <img src="icon-familia.svg" alt="Familia" width="50" height="50">
+                    </div>
+                    <h3>Familia</h3>
+                    <p>Parques, actividades para niños y aventuras para disfrutar juntos en familia.</p>
+                </div>
+
+                <div class="category-card gastronomia">
+                    <div class="category-icon">
+                        <img src="icon-gastronomia.svg" alt="Gastronomía" width="50" height="50">
+                    </div>
+                    <h3>Gastronomía</h3>
+                    <p>Restaurantes, bares con mixología exquisita y cursos de cocina para explorar.</p>
+                </div>
+
+                <div class="category-card cultura">
+                    <div class="category-icon">
+                        <img src="icon-cultura.svg" alt="Cultura" width="50" height="50">
+                    </div>
+                    <h3>Cultura</h3>
+                    <p>Arte, exposiciones, museos, eventos de K-pop y actividades educativas.</p>
+                </div>
+
+                <div class="category-card aventura">
+                    <div class="category-icon">
+                        <img src="icon-aventura.svg" alt="Aventura" width="50" height="50">
+                    </div>
+                    <h3>Aventura</h3>
+                    <p>Escala montañas, senderismo, ciclismo y exploraciones en la naturaleza.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Users Section -->
+    <section class="users" id="usuarios">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">¿Para quién?</span>
+                <h2>Dos formas de conectar</h2>
+                <p>Ya seas un explorador de experiencias o un negocio que las ofrece, QHH es para ti.</p>
+            </div>
+
+            <div class="users-grid">
+                <div class="user-card">
+                    <div class="user-card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                            <circle cx="12" cy="7" r="4"/>
+                        </svg>
+                    </div>
+                    <h3>Usuario</h3>
+                    <p>Individuos, parejas o familias que buscan descubrir, disfrutar y compartir nuevas emociones y experiencias a través de actividades únicas y auténticas en sus alrededores.</p>
+                    <a href="#descargar" class="cta-btn">Descargar App →</a>
+                </div>
+
+                <div class="user-card business">
+                    <div class="user-card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                            <path d="M9 22V12h6v10"/>
+                        </svg>
+                    </div>
+                    <h3>Negocio</h3>
+                    <p>Empresas, instituciones o emprendedores que ofrecen entretenimiento para la familia, parejas o particulares. Llega a más clientes.</p>
+                    <a href="#" class="cta-btn">Registrarse →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta" id="descargar">
+        <div class="container">
+            <h2>¿Listo para explorar?</h2>
+            <p>Descarga la app ahora y comienza a descubrir las mejores experiencias cerca de ti.</p>
+            
+            <div class="store-buttons">
+                <a href="https://play.google.com/store/apps/details?id=com.quehacerhoy.app" class="store-btn" target="_blank">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M3 20.5V3.5C3 2.91 3.34 2.39 3.84 2.15L13.69 12L3.84 21.85C3.34 21.6 3 21.09 3 20.5ZM16.81 15.12L6.05 21.34L14.54 12.85L16.81 15.12ZM20.16 10.81C20.5 11.08 20.75 11.5 20.75 12C20.75 12.5 20.53 12.9 20.18 13.18L17.89 14.5L15.39 12L17.89 9.5L20.16 10.81ZM6.05 2.66L16.81 8.88L14.54 11.15L6.05 2.66Z"/>
+                    </svg>
+                    <span>
+                        <span class="small">Disponible en</span>
+                        Google Play
+                    </span>
+                </a>
+                <a href="https://apps.apple.com/do/app/que-hacer-hoy/id6741241757" class="store-btn" target="_blank">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M18.71 19.5C17.88 20.74 17 21.95 15.66 21.97C14.32 22 13.89 21.18 12.37 21.18C10.84 21.18 10.37 21.95 9.1 22C7.79 22.05 6.8 20.68 5.96 19.47C4.25 17 2.94 12.45 4.7 9.39C5.57 7.87 7.13 6.91 8.82 6.88C10.1 6.86 11.32 7.75 12.11 7.75C12.89 7.75 14.37 6.68 15.92 6.84C16.57 6.87 18.39 7.1 19.56 8.82C19.47 8.88 17.39 10.1 17.41 12.63C17.44 15.65 20.06 16.66 20.09 16.67C20.06 16.74 19.67 18.11 18.71 19.5ZM13 3.5C13.73 2.67 14.94 2.04 15.94 2C16.07 3.17 15.6 4.35 14.9 5.19C14.21 6.04 13.07 6.7 11.95 6.61C11.8 5.46 12.36 4.26 13 3.5Z"/>
+                    </svg>
+                    <span>
+                        <span class="small">Disponible en</span>
+                        App Store
+                    </span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <img src="logo-full.png" alt="Que Hacer Hoy" class="logo-full-footer">
+            </div>
+
+            <div class="social-links">
+                <a href="https://www.facebook.com/profile.php?id=61563614344855&mibextid=ZbWKwL" class="social-link" target="_blank" aria-label="Facebook">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                    </svg>
+                </a>
+                <a href="https://www.instagram.com/qhacerhoyrd/profilecard/?igsh=emNoY3o2eWJyamVz" class="social-link" target="_blank" aria-label="Instagram">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+                    </svg>
+                </a>
+                <a href="https://api.whatsapp.com/send/?phone=18098628131&text&type=phone_number&app_absent=0" class="social-link" target="_blank" aria-label="WhatsApp">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                    </svg>
+                </a>
+            </div>
+
+            <div class="footer-bottom">
+                <p>© 2024 Que Hacer Hoy. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Video Modal Functionality
+        const videoModal = document.getElementById('videoModal');
+        const modalVideo = document.getElementById('modalVideo');
+        const closeModal = document.getElementById('closeModal');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const currentVideoSpan = document.getElementById('currentVideo');
+        const totalVideosSpan = document.getElementById('totalVideos');
+        const videoDots = document.getElementById('videoDots');
+
+        // Array of video paths - Add your videos here
+        const videos = [
+            'videos/video1.mp4',
+            'videos/video2.mp4'
+            // Add more videos as needed: 'videos/video3.mp4', etc.
+        ];
+
+        let currentVideoIndex = 0;
+
+        // Initialize modal
+        function initVideoModal() {
+            // Check if modal was already shown in this session
+            const modalShown = sessionStorage.getItem('videoModalShown');
+            
+            if (!modalShown) {
+                // Show modal after a short delay
+                setTimeout(() => {
+                    videoModal.classList.add('active');
+                    loadVideo(0);
+                    createDots();
+                }, 500);
+                
+                // Mark as shown in session
+                sessionStorage.setItem('videoModalShown', 'true');
+            }
+        }
+
+        // Create navigation dots
+        function createDots() {
+            videoDots.innerHTML = '';
+            videos.forEach((_, index) => {
+                const dot = document.createElement('div');
+                dot.className = 'video-dot';
+                if (index === currentVideoIndex) {
+                    dot.classList.add('active');
+                }
+                dot.addEventListener('click', () => loadVideo(index));
+                videoDots.appendChild(dot);
+            });
+        }
+
+        // Load video
+        function loadVideo(index) {
+            currentVideoIndex = index;
+            modalVideo.src = videos[index];
+            modalVideo.load();
+            modalVideo.play();
+            
+            // Update UI
+            currentVideoSpan.textContent = index + 1;
+            totalVideosSpan.textContent = videos.length;
+            
+            // Update buttons
+            prevBtn.disabled = index === 0;
+            nextBtn.disabled = index === videos.length - 1;
+            
+            // Update dots
+            document.querySelectorAll('.video-dot').forEach((dot, i) => {
+                dot.classList.toggle('active', i === index);
+            });
+        }
+
+        // Close modal
+        function closeVideoModal() {
+            videoModal.classList.remove('active');
+            modalVideo.pause();
+        }
+
+        // Event listeners
+        closeModal.addEventListener('click', closeVideoModal);
+        
+        videoModal.addEventListener('click', (e) => {
+            if (e.target === videoModal) {
+                closeVideoModal();
+            }
+        });
+
+        prevBtn.addEventListener('click', () => {
+            if (currentVideoIndex > 0) {
+                loadVideo(currentVideoIndex - 1);
+            }
+        });
+
+        nextBtn.addEventListener('click', () => {
+            if (currentVideoIndex < videos.length - 1) {
+                loadVideo(currentVideoIndex + 1);
+            }
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (!videoModal.classList.contains('active')) return;
+            
+            if (e.key === 'Escape') {
+                closeVideoModal();
+            } else if (e.key === 'ArrowLeft' && currentVideoIndex > 0) {
+                loadVideo(currentVideoIndex - 1);
+            } else if (e.key === 'ArrowRight' && currentVideoIndex < videos.length - 1) {
+                loadVideo(currentVideoIndex + 1);
+            }
+        });
+
+        // Auto-advance to next video when current ends
+        modalVideo.addEventListener('ended', () => {
+            if (currentVideoIndex < videos.length - 1) {
+                setTimeout(() => {
+                    loadVideo(currentVideoIndex + 1);
+                }, 1000);
+            }
+        });
+
+        // Initialize on page load
+        window.addEventListener('load', initVideoModal);
+
+        // Auto-animate hero action words on page load
+        window.addEventListener('load', () => {
+            const words = document.querySelectorAll('.hero-actions .word');
+            const storeButtons = document.querySelectorAll('.hero .store-btn');
+            
+            // Color mapping for each word category - lighter, smoother colors
+            const colorMap = {
+                'word-social': '#FFF4CC',      // Light yellow
+                'word-familia': '#D4F1DC',     // Light green
+                'word-gastronomia': '#D4EFFC', // Light blue
+                'word-cultura': '#FFE5E5',     // Light red/pink
+                'word-aventura': '#FFFFFF'     // White
+            };
+            
+            // Add hover effect for each word
+            words.forEach(word => {
+                word.addEventListener('mouseenter', function() {
+                    const categoryClass = Array.from(this.classList).find(cls => cls.startsWith('word-'));
+                    if (categoryClass && colorMap[categoryClass]) {
+                        storeButtons.forEach(btn => {
+                            btn.style.backgroundColor = colorMap[categoryClass];
+                        });
+                    }
+                });
+                
+                word.addEventListener('mouseleave', function() {
+                    storeButtons.forEach(btn => {
+                        btn.style.backgroundColor = '#FFFFFF';
+                    });
+                });
+            });
+            
+            // Start animation after 1 second
+            setTimeout(() => {
+                words.forEach((word, index) => {
+                    // Each word animates 0.7 seconds after the previous one
+                    setTimeout(() => {
+                        word.classList.add('animate');
+                        
+                        // Change store button color during animation
+                        const categoryClass = Array.from(word.classList).find(cls => cls.startsWith('word-'));
+                        if (categoryClass && colorMap[categoryClass]) {
+                            storeButtons.forEach(btn => {
+                                btn.style.backgroundColor = colorMap[categoryClass];
+                            });
+                        }
+                        
+                        // Remove the class and reset button color after animation completes
+                        setTimeout(() => {
+                            word.classList.remove('animate');
+                            storeButtons.forEach(btn => {
+                                btn.style.backgroundColor = '#FFFFFF';
+                            });
+                        }, 600); // Duration of the animation
+                    }, index * 700); // 700ms delay between each word
+                });
+            }, 1000); // Initial 1 second delay
+        });
+    </script>
+</body>
+</html>
