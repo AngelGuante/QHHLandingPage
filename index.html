@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QHH para Negocios - Aumenta tu visibilidad</title>
+    <title>Que Hacer Hoy - Descubre experiencias cerca de ti</title>
     <link rel="icon" type="image/png" href="app-icon.png">
     <link rel="apple-touch-icon" href="app-icon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -11,17 +11,17 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #2E86AB;
-            --primary-light: #3A9BC5;
-            --primary-dark: #1F5F7A;
+            --primary: #009743;
+            --primary-light: #00B550;
+            --primary-dark: #007A36;
             --yellow: #F5C518;
-            --orange: #FF8C42;
-            --green: #009743;
+            --green: #1B7A4A;
+            --blue: #2E86AB;
+            --red: #C92A2A;
             --black: #1A1A1A;
             --white: #FFFFFF;
             --gray-light: #F8F9FA;
             --gray: #6B7280;
-            --gray-dark: #4B5563;
         }
 
         * {
@@ -48,25 +48,66 @@
             left: 0;
             right: 0;
             z-index: 1000;
-            padding: 1rem 2rem;
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            padding: 0.75rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            transition: background 0.3s ease, padding 0.3s ease;
+        }
+
+        nav.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            padding: 0.5rem 2rem;
         }
 
         .logo {
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--white);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        nav.scrolled .logo {
+            color: var(--primary);
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
         }
 
         .logo-icon-nav {
-            height: 45px;
+            height: 50px;
             width: auto;
             object-fit: contain;
+            filter: brightness(0) invert(1);
+            transition: filter 0.3s ease, height 0.3s ease;
+        }
+
+        nav.scrolled .logo-icon-nav {
+            filter: none;
+            height: 45px;
+        }
+
+        .logo-full {
+            height: 80px;
+            width: auto;
+            object-fit: contain;
+            filter: brightness(0) invert(1);
+            transition: filter 0.3s ease;
+        }
+
+        nav.scrolled .logo-full {
+            filter: none;
+            height: 60px;
         }
 
         .nav-links {
@@ -76,72 +117,75 @@
         }
 
         .nav-links a {
-            color: var(--black);
+            color: var(--white);
             text-decoration: none;
             font-weight: 500;
             transition: color 0.3s ease;
         }
 
+        nav.scrolled .nav-links a {
+            color: var(--black);
+        }
+
         .nav-links a:hover {
-            color: var(--primary);
-        }
-
-        .cta-nav {
-            background: var(--primary);
-            color: var(--white);
-            padding: 0.75rem 1.5rem;
-            border-radius: 10px;
-            font-weight: 600;
-            transition: background 0.3s ease, transform 0.3s ease;
-        }
-
-        .cta-nav:hover {
-            background: var(--primary-light);
-            transform: translateY(-2px);
+            color: var(--primary-light);
         }
 
         /* Hero Section */
-        .hero-business {
-            padding: 8rem 2rem 4rem;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            color: var(--white);
+        .hero {
             position: relative;
+            height: 100vh;
+            min-height: 750px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             overflow: hidden;
         }
 
-        .hero-business::before {
-            content: '';
+        .video-container {
             position: absolute;
             top: 0;
             left: 0;
-            right: 0;
-            bottom: 0;
-            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-            pointer-events: none;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
         }
 
-        .hero-content-business {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
-            position: relative;
+        .video-container video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
-        .hero-text {
-            animation: fadeInLeft 0.8s ease-out;
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                135deg,
+                rgba(45, 182, 125, 0.85) 0%,
+                rgba(27, 122, 74, 0.9) 100%
+            );
         }
 
-        @keyframes fadeInLeft {
+        .hero-content {
+            text-align: center;
+            color: var(--white);
+            max-width: 1000px;
+            padding: 2rem;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
             from {
                 opacity: 0;
-                transform: translateX(-50px);
+                transform: translateY(30px);
             }
             to {
                 opacity: 1;
-                transform: translateX(0);
+                transform: translateY(0);
             }
         }
 
@@ -149,115 +193,190 @@
             display: inline-block;
             background: rgba(255, 255, 255, 0.2);
             backdrop-filter: blur(10px);
-            padding: 0.5rem 1rem;
+            padding: 0.5rem 1.5rem;
             border-radius: 50px;
             font-size: 0.9rem;
-            margin-bottom: 1.5rem;
-            font-weight: 600;
+            margin-bottom: 1rem;
+            letter-spacing: 0.5px;
         }
 
-        .hero-business h1 {
+        .hero-question {
             font-family: 'Outfit', sans-serif;
-            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            font-size: clamp(3.5rem, 8vw, 5.5rem);
             font-weight: 900;
+            margin-bottom: 0.5rem;
+            opacity: 1;
+            text-shadow: 3px 3px 12px rgba(0, 0, 0, 0.4);
+            letter-spacing: -0.02em;
+        }
+
+        .hero h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 800;
             line-height: 1.1;
-            margin-bottom: 1.5rem;
+            margin-bottom: 0.5rem;
         }
 
-        .hero-business h1 span {
+        .hero h2 span {
             color: var(--yellow);
         }
 
-        .hero-business p {
-            font-size: 1.25rem;
-            opacity: 0.95;
-            margin-bottom: 2rem;
-            line-height: 1.7;
-        }
-
-        .hero-stats {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .stat {
-            text-align: center;
-        }
-
-        .stat-number {
+        .hero-actions {
             font-family: 'Outfit', sans-serif;
-            font-size: 2.5rem;
-            font-weight: 900;
-            color: var(--yellow);
-            display: block;
-        }
-
-        .stat-label {
-            font-size: 0.9rem;
-            opacity: 0.9;
-        }
-
-        .hero-image {
-            position: relative;
-            animation: fadeInRight 0.8s ease-out;
-        }
-
-        @keyframes fadeInRight {
-            from {
-                opacity: 0;
-                transform: translateX(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        .hero-image img {
-            width: 100%;
-            height: auto;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-        }
-
-        .cta-button {
-            display: inline-flex;
+            font-size: clamp(1.5rem, 4vw, 2.75rem);
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            display: flex;
+            justify-content: center;
             align-items: center;
-            gap: 0.75rem;
-            background: var(--yellow);
-            color: var(--black);
-            padding: 1rem 2rem;
-            border-radius: 12px;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 1.1rem;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border: none;
+            gap: 0.3rem;
+            flex-wrap: wrap;
+        }
+
+        .hero-actions .word {
+            display: inline-block;
+            padding: 0.1em 0.2em;
+            border-radius: 8px;
+            transition: transform 0.3s ease, text-shadow 0.3s ease;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
             cursor: pointer;
         }
 
-        .cta-button:hover {
+        .hero-actions .word:hover {
+            transform: scale(1.08) translateY(-2px);
+        }
+
+        /* Auto-animate words on page load */
+        @keyframes wordPulse {
+            0%, 100% {
+                transform: scale(1) translateY(0);
+            }
+            50% {
+                transform: scale(1.15) translateY(-3px);
+            }
+        }
+
+        .hero-actions .word.animate {
+            animation: wordPulse 0.6s ease-in-out;
+        }
+
+        /* Category Colors for Words */
+        .hero-actions .word-social {
+            color: #FFD93D; /* Brighter yellow for visibility */
+        }
+
+        .hero-actions .word-familia {
+            color: #6BCB77; /* Brighter green for visibility */
+        }
+
+        .hero-actions .word-gastronomia {
+            color: #4FC3F7; /* Brighter blue for visibility */
+        }
+
+        .hero-actions .word-cultura {
+            color: #FF6B6B; /* Brighter red for visibility */
+        }
+
+        .hero-actions .word-aventura {
+            color: #FFFFFF;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+        }
+
+        .hero p {
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            opacity: 0.95;
+        }
+
+        .store-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .store-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: var(--white);
+            color: var(--black);
+            padding: 0.875rem 1.5rem;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, color 0.4s ease;
+        }
+
+        .store-btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(245, 197, 24, 0.4);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         }
 
-        .cta-button svg {
-            width: 20px;
-            height: 20px;
+        .store-btn svg {
+            width: 28px;
+            height: 28px;
+            transition: fill 0.4s ease, color 0.4s ease;
         }
 
-        /* Container */
+        .store-btn span {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            line-height: 1.2;
+        }
+
+        .store-btn .small {
+            font-size: 0.7rem;
+            font-weight: 400;
+            opacity: 0.7;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-10px); }
+            60% { transform: translateX(-50%) translateY(-5px); }
+        }
+
+        .scroll-indicator svg {
+            width: 32px;
+            height: 32px;
+            color: var(--white);
+            opacity: 0.8;
+        }
+
+        /* About Section */
+        .about {
+            padding: 6rem 2rem;
+            background: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg stroke='%23009743' stroke-opacity='0.05' stroke-width='1'%3E%3Cline x1='0' y1='30' x2='60' y2='30'/%3E%3Cline x1='30' y1='0' x2='30' y2='60'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            pointer-events: none;
+        }
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        /* Section Styles */
-        section {
-            padding: 6rem 2rem;
         }
 
         .section-header {
@@ -267,7 +386,7 @@
 
         .section-tag {
             display: inline-block;
-            background: rgba(0, 151, 67, 0.1);
+            background: rgba(45, 182, 125, 0.1);
             color: var(--primary);
             padding: 0.5rem 1rem;
             border-radius: 50px;
@@ -281,273 +400,235 @@
         .section-header h2 {
             font-family: 'Outfit', sans-serif;
             font-size: clamp(2rem, 4vw, 3rem);
-            font-weight: 800;
+            font-weight: 700;
             color: var(--black);
             margin-bottom: 1rem;
         }
 
         .section-header p {
             color: var(--gray);
-            max-width: 700px;
+            max-width: 650px;
             margin: 0 auto;
             font-size: 1.1rem;
         }
 
-        /* How It Works */
-        .how-it-works {
+        /* Categories Section */
+        .categories {
+            padding: 6rem 2rem;
             background: var(--gray-light);
-        }
-
-        .steps-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-        }
-
-        .step-card {
-            background: var(--white);
-            padding: 2.5rem;
-            border-radius: 20px;
-            text-align: center;
             position: relative;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            overflow: hidden;
         }
 
-        .step-card:hover {
-            transform: translateY(-10px);
+        .categories::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23009743' fill-opacity='0.05'%3E%3Cpath d='M30 25 L35 30 L30 35 L25 30 Z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            pointer-events: none;
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .category-card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .category-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+        }
+
+        .category-card:hover {
+            transform: translateY(-8px);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
         }
 
-        .step-number {
-            position: absolute;
-            top: -20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 50px;
-            height: 50px;
-            background: var(--primary);
-            color: var(--white);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Outfit', sans-serif;
-            font-size: 1.5rem;
-            font-weight: 900;
-            box-shadow: 0 4px 12px rgba(0, 151, 67, 0.3);
-        }
+        .category-card.social::before { background: var(--yellow); }
+        .category-card.familia::before { background: var(--green); }
+        .category-card.gastronomia::before { background: var(--blue); }
+        .category-card.cultura::before { background: var(--red); }
+        .category-card.aventura::before { background: var(--black); }
 
-        .step-icon {
-            width: 80px;
-            height: 80px;
-            margin: 1.5rem auto 1.5rem;
-            background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary) 100%);
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .step-icon svg {
-            width: 40px;
-            height: 40px;
-            color: var(--white);
-        }
-
-        .step-card h3 {
-            font-family: 'Outfit', sans-serif;
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            color: var(--black);
-        }
-
-        .step-card p {
-            color: var(--gray);
-            line-height: 1.7;
-        }
-
-        /* Benefits Section */
-        .benefits {
-            background: var(--white);
-        }
-
-        .benefits-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .benefit-card {
-            background: var(--white);
-            border: 2px solid var(--gray-light);
-            padding: 2rem;
+        .category-icon {
+            width: 70px;
+            height: 70px;
             border-radius: 16px;
-            transition: all 0.3s ease;
-        }
-
-        .benefit-card:hover {
-            border-color: var(--primary);
-            box-shadow: 0 10px 30px rgba(0, 151, 67, 0.15);
-            transform: translateY(-5px);
-        }
-
-        .benefit-icon {
-            width: 60px;
-            height: 60px;
-            background: rgba(0, 151, 67, 0.1);
-            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 1.5rem;
+            margin: 0 auto 1.25rem;
+            background: transparent;
         }
 
-        .benefit-icon svg {
-            width: 30px;
-            height: 30px;
-            color: var(--primary);
+        .category-icon img {
+            width: 55px;
+            height: 55px;
+            object-fit: contain;
         }
 
-        .benefit-card h3 {
+        .category-card.social .category-icon { background: rgba(245, 197, 24, 0.15); color: var(--yellow); }
+        .category-card.familia .category-icon { background: rgba(27, 122, 74, 0.15); color: var(--green); }
+        .category-card.gastronomia .category-icon { background: rgba(46, 134, 171, 0.15); color: var(--blue); }
+        .category-card.cultura .category-icon { background: rgba(201, 42, 42, 0.15); color: var(--red); }
+        .category-card.aventura .category-icon { background: rgba(26, 26, 26, 0.1); color: var(--black); }
+
+        .category-icon svg {
+            width: 32px;
+            height: 32px;
+        }
+
+        .category-card h3 {
             font-family: 'Outfit', sans-serif;
             font-size: 1.25rem;
             font-weight: 700;
             margin-bottom: 0.75rem;
+        }
+
+        .category-card.social h3 { color: #C9A000; }
+        .category-card.familia h3 { color: var(--green); }
+        .category-card.gastronomia h3 { color: var(--blue); }
+        .category-card.cultura h3 { color: var(--red); }
+        .category-card.aventura h3 { color: var(--black); }
+
+        .category-card p {
+            color: var(--gray);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* Users Section */
+        .users {
+            padding: 6rem 2rem;
+            background: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .users::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23009743' fill-opacity='0.04'%3E%3Ccircle cx='40' cy='10' r='2'/%3E%3Ccircle cx='40' cy='40' r='2'/%3E%3Ccircle cx='40' cy='70' r='2'/%3E%3Ccircle cx='10' cy='25' r='2'/%3E%3Ccircle cx='10' cy='55' r='2'/%3E%3Ccircle cx='70' cy='25' r='2'/%3E%3Ccircle cx='70' cy='55' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            pointer-events: none;
+        }
+
+        .users-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .user-card {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            border-radius: 24px;
+            padding: 2.5rem;
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .user-card::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .user-card.business {
+            background: linear-gradient(135deg, var(--yellow) 0%, #E0A800 100%);
             color: var(--black);
         }
 
-        .benefit-card p {
-            color: var(--gray);
+        .user-card-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .user-card.business .user-card-icon {
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        .user-card-icon svg {
+            width: 28px;
+            height: 28px;
+        }
+
+        .user-card h3 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .user-card p {
+            opacity: 0.9;
             line-height: 1.7;
         }
 
-        /* Comparison Section */
-        .comparison {
-            background: var(--gray-light);
-        }
-
-        .comparison-table {
-            max-width: 900px;
-            margin: 0 auto;
+        .user-card .cta-btn {
+            display: inline-block;
+            margin-top: 1.5rem;
+            padding: 0.75rem 1.5rem;
             background: var(--white);
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-        }
-
-        .comparison-header {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr;
-            background: var(--primary);
-            color: var(--white);
-            font-weight: 700;
-            padding: 1.5rem;
-            text-align: center;
-        }
-
-        .comparison-row {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr;
-            padding: 1.5rem;
-            border-bottom: 1px solid var(--gray-light);
-            align-items: center;
-        }
-
-        .comparison-row:last-child {
-            border-bottom: none;
-        }
-
-        .comparison-feature {
+            color: var(--primary);
+            border-radius: 10px;
+            text-decoration: none;
             font-weight: 600;
+            transition: transform 0.3s ease;
+        }
+
+        .user-card.business .cta-btn {
             color: var(--black);
         }
 
-        .comparison-value {
-            text-align: center;
-            font-weight: 600;
-        }
-
-        .check {
-            color: var(--primary);
-            font-size: 1.5rem;
-        }
-
-        .cross {
-            color: var(--gray);
-            font-size: 1.5rem;
-        }
-
-        .highlight {
-            background: rgba(0, 151, 67, 0.05);
-        }
-
-        /* Metrics Section */
-        .metrics {
-            background: var(--white);
-        }
-
-        .metrics-showcase {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
-        }
-
-        .metrics-image {
-            position: relative;
-        }
-
-        .metrics-image img {
-            width: 100%;
-            height: auto;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
-        }
-
-        .metrics-content {
-            padding: 2rem;
-        }
-
-        .metrics-list {
-            list-style: none;
-            padding: 0;
-        }
-
-        .metrics-list li {
-            display: flex;
-            align-items: flex-start;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-            padding: 1rem;
-            background: var(--gray-light);
-            border-radius: 12px;
-        }
-
-        .metrics-list li svg {
-            width: 24px;
-            height: 24px;
-            color: var(--primary);
-            flex-shrink: 0;
-            margin-top: 2px;
-        }
-
-        .metrics-list li strong {
-            color: var(--black);
-            font-weight: 700;
+        .user-card .cta-btn:hover {
+            transform: translateX(5px);
         }
 
         /* CTA Section */
-        .cta-section {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            color: var(--white);
-            text-align: center;
+        .cta {
             padding: 6rem 2rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            text-align: center;
+            color: var(--white);
             position: relative;
             overflow: hidden;
         }
 
-        .cta-section::before {
+        .cta::before {
             content: '';
             position: absolute;
             top: 0;
@@ -558,23 +639,24 @@
             pointer-events: none;
         }
 
-        .cta-content {
-            max-width: 800px;
-            margin: 0 auto;
+        .cta h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
             position: relative;
         }
 
-        .cta-section h2 {
-            font-family: 'Outfit', sans-serif;
-            font-size: clamp(2rem, 4vw, 3rem);
-            font-weight: 800;
-            margin-bottom: 1rem;
+        .cta p {
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            opacity: 0.9;
+            font-size: 1.1rem;
+            position: relative;
         }
 
-        .cta-section p {
-            font-size: 1.25rem;
-            opacity: 0.95;
-            margin-bottom: 2rem;
+        .cta .store-buttons {
+            position: relative;
         }
 
         /* Footer */
@@ -593,26 +675,16 @@
             gap: 2rem;
         }
 
-        .footer-logo img {
-            height: 80px;
-            width: auto;
-        }
-
-        .footer-links {
+        .footer-logo {
             display: flex;
-            gap: 2rem;
-            flex-wrap: wrap;
+            align-items: center;
             justify-content: center;
         }
 
-        .footer-links a {
-            color: var(--white);
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        .footer-links a:hover {
-            color: var(--primary-light);
+        .logo-full-footer {
+            height: 120px;
+            width: auto;
+            object-fit: contain;
         }
 
         .social-links {
@@ -647,31 +719,9 @@
             text-align: center;
             opacity: 0.6;
             font-size: 0.9rem;
-            margin-top: 2rem;
         }
 
         /* Responsive */
-        @media (max-width: 968px) {
-            .hero-content-business {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-
-            .hero-stats {
-                justify-content: center;
-            }
-
-            .metrics-showcase {
-                grid-template-columns: 1fr;
-            }
-
-            .comparison-header,
-            .comparison-row {
-                grid-template-columns: 2fr 1fr 1fr;
-                font-size: 0.9rem;
-            }
-        }
-
         @media (max-width: 768px) {
             nav {
                 padding: 1rem;
@@ -681,335 +731,567 @@
                 display: none;
             }
 
-            .hero-business {
-                padding: 6rem 1rem 3rem;
-            }
-
-            section {
-                padding: 4rem 1rem;
-            }
-
-            .hero-stats {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-            }
-
-            .comparison-header,
-            .comparison-row {
+            .hero-content {
                 padding: 1rem;
-                font-size: 0.85rem;
+            }
+
+            .hero-actions {
+                gap: 0.15rem;
+                font-size: clamp(1.25rem, 3.5vw, 2rem);
+            }
+
+            .categories-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .store-btn {
+                padding: 0.75rem 1.25rem;
+            }
+
+            .store-btn .text {
+                display: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-actions {
+                flex-direction: column;
+                gap: 0.1rem;
+            }
+
+            .categories-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .users-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Video Modal Styles */
+        .video-notification {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 9999;
+            cursor: pointer;
+            animation: slideInBounce 0.8s ease-out 2s both;
+        }
+
+        .video-notification.hidden {
+            display: none;
+        }
+
+        @keyframes slideInBounce {
+            0% {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            60% {
+                transform: translateX(-20px);
+                opacity: 1;
+            }
+            80% {
+                transform: translateX(10px);
+            }
+            100% {
+                transform: translateX(0);
+            }
+        }
+
+        .notification-bubble {
+            position: relative;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            padding: 1rem 1.5rem;
+            border-radius: 16px;
+            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.5),
+                        0 6px 24px rgba(0, 151, 67, 0.6),
+                        0 0 0 1px rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 12px 48px rgba(0, 0, 0, 0.5),
+                            0 6px 24px rgba(0, 151, 67, 0.6),
+                            0 0 0 1px rgba(255, 255, 255, 0.1);
+            }
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 16px 56px rgba(0, 0, 0, 0.6),
+                            0 8px 32px rgba(0, 151, 67, 0.7),
+                            0 0 0 1px rgba(255, 255, 255, 0.1);
+            }
+        }
+
+        .notification-bubble:hover {
+            transform: scale(1.08);
+            box-shadow: 0 20px 64px rgba(0, 0, 0, 0.6),
+                        0 10px 40px rgba(0, 151, 67, 0.8),
+                        0 0 0 1px rgba(255, 255, 255, 0.2);
+            animation: none;
+        }
+
+        .notification-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .notification-icon::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            animation: ripple 2s ease-out infinite;
+        }
+
+        @keyframes ripple {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1.8);
+                opacity: 0;
+            }
+        }
+
+        .notification-icon svg {
+            width: 28px;
+            height: 28px;
+            color: white;
+            position: relative;
+            z-index: 1;
+        }
+
+        .notification-content {
+            color: white;
+            flex: 1;
+        }
+
+        .notification-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .notification-text {
+            font-size: 0.85rem;
+            opacity: 0.95;
+            line-height: 1.3;
+        }
+
+        .notification-close {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .notification-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #FF4444;
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 700;
+            border: 3px solid white;
+            animation: bounceScale 1s ease-in-out infinite;
+        }
+
+        @keyframes bounceScale {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .video-notification {
+                bottom: 1rem;
+                right: 1rem;
+                left: 1rem;
+            }
+
+            .notification-bubble {
+                padding: 0.875rem 1rem;
+            }
+
+            .notification-icon {
+                width: 40px;
+                height: 40px;
+            }
+
+            .notification-icon svg {
+                width: 24px;
+                height: 24px;
+            }
+
+            .notification-title {
+                font-size: 0.9rem;
+            }
+
+            .notification-text {
+                font-size: 0.8rem;
+            }
+        }
+
+        /* Video Modal Styles */
+        .video-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .video-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .video-modal-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+            width: auto;
+            max-width: 500px;
+            background: var(--black);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .video-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .video-modal-title {
+            color: var(--white);
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        .video-modal-close {
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 1.5rem;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background 0.3s ease;
+            flex-shrink: 0;
+        }
+        .video-modal-close:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .video-container-modal {
+            position: relative;
+            width: 100%;
+            max-width: 100%;
+            background: var(--black);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 400px;
+        }
+
+        .video-container-modal video {
+            width: 100%;
+            height: auto;
+            max-height: 70vh;
+            object-fit: contain;
+        }
+
+        @media (max-width: 768px) {
+            .video-modal-content {
+                width: 95%;
+                max-width: 95%;
+            }
+
+            .video-modal-title {
+                font-size: 1rem;
+            }
+
+            .video-modal-header {
+                padding: 0.75rem 1rem;
+            }
+
+            .video-container-modal video {
+                max-height: 60vh;
             }
         }
     </style>
 </head>
 <body>
     <!-- Navigation -->
-    <nav>
-        <a href="index.html" class="logo">
+    <nav id="navbar">
+        <a href="#" class="logo">
             <img src="app-icon.png" alt="Que Hacer Hoy" class="logo-icon-nav">
         </a>
         <div class="nav-links">
-            <a href="#como-funciona">¿Cómo funciona?</a>
-            <a href="#beneficios">Beneficios</a>
-            <a href="#metricas">Métricas</a>
-            <a href="#contacto" class="cta-nav">Únete Ahora</a>
+            <a href="#categorias">Categorías</a>
+            <a href="#usuarios">¿Para quién?</a>
+            <a href="#descargar">Descargar</a>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section class="hero-business">
-        <div class="hero-content-business">
-            <div class="hero-text">
-                <span class="hero-badge">🚀 Para Negocios</span>
-                <h1>Haz crecer tu negocio con <span>Que Hacer Hoy</span></h1>
-                <p>Conecta con miles de usuarios buscando experiencias únicas. Aumenta tu visibilidad, atrae más clientes y haz crecer tu negocio local.</p>
-                <a href="#contacto" class="cta-button">
-                    Comenzar Ahora
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M5 12h14M12 5l7 7-7 7"/>
-                    </svg>
-                </a>
-                <div class="hero-stats">
-                    <div class="stat">
-                        <span class="stat-number">24h</span>
-                        <span class="stat-label">Duración Publicaciones</span>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-number">2X</span>
-                        <span class="stat-label">Más Visibilidad</span>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-number">100%</span>
-                        <span class="stat-label">Métricas Completas</span>
-                    </div>
-                </div>
+    <!-- Video Notification -->
+    <div class="video-notification" id="videoNotification">
+        <div class="notification-bubble">
+            <div class="notification-badge">▶️</div>
+            <div class="notification-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                </svg>
             </div>
-            <div class="hero-image">
-                <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d" alt="Negocios en QHH" style="aspect-ratio: 1/1; object-fit: cover; background: linear-gradient(135deg, var(--primary-light), var(--primary));">
+            <div class="notification-content">
+                <div class="notification-title">¿Qué es Que Hacer Hoy?</div>
+                <div class="notification-text">Descubre nuestra app en este video</div>
+            </div>
+            <button class="notification-close" id="closeNotification" aria-label="Cerrar">✕</button>
+        </div>
+    </div>
+
+    <!-- Video Modal -->
+    <div class="video-modal" id="videoModal">
+        <div class="video-modal-content">
+            <div class="video-modal-header">
+                <h3 class="video-modal-title">¿Qué es Que Hacer Hoy?</h3>
+                <button class="video-modal-close" id="closeModal" aria-label="Cerrar">✕</button>
+            </div>
+            <div class="video-container-modal">
+                <video id="modalVideo" controls autoplay>
+                    <source src="videos/video1.mp4" type="video/mp4">
+                    Tu navegador no soporta la reproducción de video.
+                </video>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="video-container">
+            <video autoplay muted loop playsinline poster="poster.jpg">
+                <source src="video.mp4" type="video/mp4">
+            </video>
+            <div class="video-overlay"></div>
+        </div>
+        
+        <div class="hero-content">
+            <h1 class="hero-question">¿Sin planes?</h1>
+            <h2>Descubre <span>qué hacer hoy</span></h2>
+            <div class="hero-actions">
+                <span class="word word-social">Conecta.</span>
+                <span class="word word-familia">Vive.</span>
+                <span class="word word-gastronomia">Prueba.</span>
+                <span class="word word-cultura">Aprende.</span>
+                <span class="word word-aventura">Explora.</span>
+            </div>
+            <p>Encuentra las mejores experiencias y actividades de entretenimiento cerca de ti. ¡Cada día es una nueva aventura!</p>
+            
+            <div class="hero-badge">🎉 Disponible en iOS y Android</div>
+            <div class="store-buttons">
+                <a href="https://play.google.com/store/apps/details?id=com.quehacerhoy.app" class="store-btn" target="_blank">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M3 20.5V3.5C3 2.91 3.34 2.39 3.84 2.15L13.69 12L3.84 21.85C3.34 21.6 3 21.09 3 20.5ZM16.81 15.12L6.05 21.34L14.54 12.85L16.81 15.12ZM20.16 10.81C20.5 11.08 20.75 11.5 20.75 12C20.75 12.5 20.53 12.9 20.18 13.18L17.89 14.5L15.39 12L17.89 9.5L20.16 10.81ZM6.05 2.66L16.81 8.88L14.54 11.15L6.05 2.66Z"/>
+                    </svg>
+                    <span>
+                        <span class="small">Disponible en</span>
+                        Google Play
+                    </span>
+                </a>
+                <a href="https://apps.apple.com/do/app/que-hacer-hoy/id6741241757" class="store-btn" target="_blank">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M18.71 19.5C17.88 20.74 17 21.95 15.66 21.97C14.32 22 13.89 21.18 12.37 21.18C10.84 21.18 10.37 21.95 9.1 22C7.79 22.05 6.8 20.68 5.96 19.47C4.25 17 2.94 12.45 4.7 9.39C5.57 7.87 7.13 6.91 8.82 6.88C10.1 6.86 11.32 7.75 12.11 7.75C12.89 7.75 14.37 6.68 15.92 6.84C16.57 6.87 18.39 7.1 19.56 8.82C19.47 8.88 17.39 10.1 17.41 12.63C17.44 15.65 20.06 16.66 20.09 16.67C20.06 16.74 19.67 18.11 18.71 19.5ZM13 3.5C13.73 2.67 14.94 2.04 15.94 2C16.07 3.17 15.6 4.35 14.9 5.19C14.21 6.04 13.07 6.7 11.95 6.61C11.8 5.46 12.36 4.26 13 3.5Z"/>
+                    </svg>
+                    <span>
+                        <span class="small">Disponible en</span>
+                        App Store
+                    </span>
+                </a>
+            </div>
+        </div>
+
+        <div class="scroll-indicator">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 5v14M5 12l7 7 7-7"/>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="categories" id="categorias">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Categorías</span>
+                <h2>Encuentra tu experiencia ideal</h2>
+                <p>Cinco categorías diseñadas para cada tipo de aventura. Desde salidas sociales hasta exploraciones culturales.</p>
+            </div>
+
+            <div class="categories-grid">
+                <div class="category-card social">
+                    <div class="category-icon">
+                        <img src="icon-social.svg" alt="Social" width="50" height="50">
+                    </div>
+                    <h3>Social</h3>
+                    <p>Afterworks, salidas nocturnas, reuniones con amigos y fiestas animadas. Perfecto para socializar.</p>
+                </div>
+
+                <div class="category-card familia">
+                    <div class="category-icon">
+                        <img src="icon-familia.svg" alt="Familia" width="50" height="50">
+                    </div>
+                    <h3>Familia</h3>
+                    <p>Parques, actividades para niños y aventuras para disfrutar juntos en familia.</p>
+                </div>
+
+                <div class="category-card gastronomia">
+                    <div class="category-icon">
+                        <img src="icon-gastronomia.svg" alt="Gastronomía" width="50" height="50">
+                    </div>
+                    <h3>Gastronomía</h3>
+                    <p>Restaurantes, bares con mixología exquisita y cursos de cocina para explorar.</p>
+                </div>
+
+                <div class="category-card cultura">
+                    <div class="category-icon">
+                        <img src="icon-cultura.svg" alt="Cultura" width="50" height="50">
+                    </div>
+                    <h3>Cultura</h3>
+                    <p>Arte, exposiciones, museos, eventos de K-pop y actividades educativas.</p>
+                </div>
+
+                <div class="category-card aventura">
+                    <div class="category-icon">
+                        <img src="icon-aventura.svg" alt="Aventura" width="50" height="50">
+                    </div>
+                    <h3>Aventura</h3>
+                    <p>Escala montañas, senderismo, ciclismo y exploraciones en la naturaleza.</p>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- How It Works -->
-    <section class="how-it-works" id="como-funciona">
+    <!-- Users Section -->
+    <section class="users" id="usuarios">
         <div class="container">
             <div class="section-header">
-                <span class="section-tag">Proceso Simple</span>
-                <h2>¿Cómo funciona?</h2>
-                <p>Únete a QHH en 3 simples pasos y comienza a atraer más clientes hoy mismo</p>
+                <span class="section-tag">¿Para quién?</span>
+                <h2>Dos formas de conectar</h2>
+                <p>Ya seas un explorador de experiencias o un negocio que las ofrece, QHH es para ti.</p>
             </div>
 
-            <div class="steps-grid">
-                <div class="step-card">
-                    <div class="step-number">1</div>
-                    <div class="step-icon">
+            <div class="users-grid">
+                <div class="user-card">
+                    <div class="user-card-icon">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
                             <circle cx="12" cy="7" r="4"/>
                         </svg>
                     </div>
-                    <h3>Regístrate</h3>
-                    <p>Crea tu perfil de negocio en menos de 5 minutos. Agrega tu información, fotos y categorías.</p>
+                    <h3>Usuario</h3>
+                    <p>Individuos, parejas o familias que buscan descubrir, disfrutar y compartir nuevas emociones y experiencias a través de actividades únicas y auténticas en sus alrededores.</p>
+                    <a href="#descargar" class="cta-btn">Descargar App →</a>
                 </div>
 
-                <div class="step-card">
-                    <div class="step-number">2</div>
-                    <div class="step-icon">
+                <div class="user-card business">
+                    <div class="user-card-icon">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
-                            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                            <path d="M9 22V12h6v10"/>
                         </svg>
                     </div>
-                    <h3>Publica</h3>
-                    <p>Comparte tus eventos, promociones y actividades. Tus publicaciones duran 24 horas con membresía.</p>
-                </div>
-
-                <div class="step-card">
-                    <div class="step-number">3</div>
-                    <div class="step-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M3 3v18h18"/>
-                            <path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"/>
-                        </svg>
-                    </div>
-                    <h3>Crece</h3>
-                    <p>Observa tus métricas en tiempo real. Atrae más clientes y haz crecer tu negocio.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Benefits -->
-    <section class="benefits" id="beneficios">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-tag">Ventajas</span>
-                <h2>Beneficios exclusivos</h2>
-                <p>Todo lo que necesitas para destacar y atraer más clientes</p>
-            </div>
-
-            <div class="benefits-grid">
-                <div class="benefit-card">
-                    <div class="benefit-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="12" cy="12" r="10"/>
-                            <path d="M12 6v6l4 2"/>
-                        </svg>
-                    </div>
-                    <h3>Publicaciones 24 Horas</h3>
-                    <p>Tus publicaciones permanecen visibles durante 24 horas completas, el doble que usuarios normales (12 horas).</p>
-                </div>
-
-                <div class="benefit-card">
-                    <div class="benefit-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-                            <circle cx="12" cy="12" r="3"/>
-                        </svg>
-                    </div>
-                    <h3>Mayor Visibilidad</h3>
-                    <p>Aparece en búsquedas destacadas y recomendaciones personalizadas de usuarios cercanos.</p>
-                </div>
-
-                <div class="benefit-card">
-                    <div class="benefit-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M3 3v18h18"/>
-                            <path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"/>
-                        </svg>
-                    </div>
-                    <h3>Métricas Detalladas</h3>
-                    <p>Accede a analíticas completas: visitas, likes, seguidores nuevos y comparativas con períodos anteriores.</p>
-                </div>
-
-                <div class="benefit-card">
-                    <div class="benefit-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-                            <circle cx="9" cy="7" r="4"/>
-                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-                            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-                        </svg>
-                    </div>
-                    <h3>Atrae Más Clientes</h3>
-                    <p>Conecta con usuarios que buscan activamente experiencias como las que ofreces.</p>
-                </div>
-
-                <div class="benefit-card">
-                    <div class="benefit-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/>
-                            <line x1="7" y1="7" x2="7.01" y2="7"/>
-                        </svg>
-                    </div>
-                    <h3>Promociones Destacadas</h3>
-                    <p>Tus ofertas especiales y eventos aparecen en secciones prioritarias de la app.</p>
-                </div>
-
-                <div class="benefit-card">
-                    <div class="benefit-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-                        </svg>
-                    </div>
-                    <h3>Perfil Verificado</h3>
-                    <p>Badge de negocio verificado que genera confianza y credibilidad entre los usuarios.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Comparison Table -->
-    <section class="comparison">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-tag">Comparación</span>
-                <h2>Usuario Normal vs Cliente QHH</h2>
-                <p>Descubre todo lo que obtienes al ser parte de QHH</p>
-            </div>
-
-            <div class="comparison-table">
-                <div class="comparison-header">
-                    <div>Característica</div>
-                    <div>Usuario Normal</div>
-                    <div>Cliente QHH</div>
-                </div>
-                <div class="comparison-row">
-                    <div class="comparison-feature">Duración de publicaciones</div>
-                    <div class="comparison-value">12 horas</div>
-                    <div class="comparison-value highlight"><strong>24 horas</strong></div>
-                </div>
-                <div class="comparison-row">
-                    <div class="comparison-feature">Métricas y analíticas</div>
-                    <div class="comparison-value"><span class="cross">✕</span></div>
-                    <div class="comparison-value highlight"><span class="check">✓</span></div>
-                </div>
-                <div class="comparison-row">
-                    <div class="comparison-feature">Perfil verificado</div>
-                    <div class="comparison-value"><span class="cross">✕</span></div>
-                    <div class="comparison-value highlight"><span class="check">✓</span></div>
-                </div>
-                <div class="comparison-row">
-                    <div class="comparison-feature">Promociones destacadas</div>
-                    <div class="comparison-value"><span class="cross">✕</span></div>
-                    <div class="comparison-value highlight"><span class="check">✓</span></div>
-                </div>
-                <div class="comparison-row">
-                    <div class="comparison-feature">Mayor visibilidad</div>
-                    <div class="comparison-value"><span class="cross">✕</span></div>
-                    <div class="comparison-value highlight"><span class="check">✓</span></div>
-                </div>
-                <div class="comparison-row">
-                    <div class="comparison-feature">Seguimiento de seguidores</div>
-                    <div class="comparison-value">Básico</div>
-                    <div class="comparison-value highlight"><strong>Avanzado</strong></div>
-                </div>
-                <div class="comparison-row">
-                    <div class="comparison-feature">Soporte prioritario</div>
-                    <div class="comparison-value"><span class="cross">✕</span></div>
-                    <div class="comparison-value highlight"><span class="check">✓</span></div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Metrics Showcase -->
-    <section class="metrics" id="metricas">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-tag">Analíticas</span>
-                <h2>Métricas que impulsan tu negocio</h2>
-                <p>Toma decisiones inteligentes con datos en tiempo real</p>
-            </div>
-
-            <div class="metrics-showcase">
-                <div class="metrics-image">
-                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800" alt="Dashboard de métricas" style="aspect-ratio: 4/3; object-fit: cover; background: linear-gradient(135deg, #f0f9ff, #e0f2fe);">
-                </div>
-                <div class="metrics-content">
-                    <ul class="metrics-list">
-                        <li>
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
-                            </svg>
-                            <div>
-                                <strong>Visitas al perfil</strong> - Mide cuántas personas descubren tu negocio diariamente
-                            </div>
-                        </li>
-                        <li>
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
-                            </svg>
-                            <div>
-                                <strong>Likes y guardados</strong> - Conoce qué contenido resuena más con tu audiencia
-                            </div>
-                        </li>
-                        <li>
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-                                <circle cx="9" cy="7" r="4"/>
-                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-                                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-                            </svg>
-                            <div>
-                                <strong>Nuevos seguidores</strong> - Rastrea el crecimiento de tu comunidad
-                            </div>
-                        </li>
-                        <li>
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M3 3v18h18"/>
-                                <path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"/>
-                            </svg>
-                            <div>
-                                <strong>Comparativas</strong> - Analiza tu rendimiento vs. períodos anteriores
-                            </div>
-                        </li>
-                        <li>
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <circle cx="12" cy="12" r="10"/>
-                                <path d="M12 6v6l4 2"/>
-                            </svg>
-                            <div>
-                                <strong>Horarios peak</strong> - Descubre cuándo tu audiencia está más activa
-                            </div>
-                        </li>
-                    </ul>
+                    <h3>Negocio</h3>
+                    <p>Empresas, instituciones o emprendedores que ofrecen entretenimiento para la familia, parejas o particulares. Llega a más clientes.</p>
+                    <a href="clients.html" class="cta-btn">Registrarse →</a>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- CTA Section -->
-    <section class="cta-section" id="contacto">
-        <div class="cta-content">
-            <h2>¿Listo para hacer crecer tu negocio?</h2>
-            <p>Únete a cientos de negocios que ya están aumentando su visibilidad y atrayendo más clientes con QHH.</p>
-            <a href="/cdn-cgi/l/email-protection#b6d8d3d1d9d5dfd9c5f6c7c3d3ded7d5d3c4ded9cf98d5d9db" class="cta-button">
-                Contáctanos Ahora
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M5 12h14M12 5l7 7-7 7"/>
-                </svg>
-            </a>
+    <section class="cta" id="descargar">
+        <div class="container">
+            <h2>¿Listo para explorar?</h2>
+            <p>Descarga la app ahora y comienza a descubrir las mejores experiencias cerca de ti.</p>
+            
+            <div class="store-buttons">
+                <a href="https://play.google.com/store/apps/details?id=com.quehacerhoy.app" class="store-btn" target="_blank">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M3 20.5V3.5C3 2.91 3.34 2.39 3.84 2.15L13.69 12L3.84 21.85C3.34 21.6 3 21.09 3 20.5ZM16.81 15.12L6.05 21.34L14.54 12.85L16.81 15.12ZM20.16 10.81C20.5 11.08 20.75 11.5 20.75 12C20.75 12.5 20.53 12.9 20.18 13.18L17.89 14.5L15.39 12L17.89 9.5L20.16 10.81ZM6.05 2.66L16.81 8.88L14.54 11.15L6.05 2.66Z"/>
+                    </svg>
+                    <span>
+                        <span class="small">Disponible en</span>
+                        Google Play
+                    </span>
+                </a>
+                <a href="https://apps.apple.com/do/app/que-hacer-hoy/id6741241757" class="store-btn" target="_blank">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M18.71 19.5C17.88 20.74 17 21.95 15.66 21.97C14.32 22 13.89 21.18 12.37 21.18C10.84 21.18 10.37 21.95 9.1 22C7.79 22.05 6.8 20.68 5.96 19.47C4.25 17 2.94 12.45 4.7 9.39C5.57 7.87 7.13 6.91 8.82 6.88C10.1 6.86 11.32 7.75 12.11 7.75C12.89 7.75 14.37 6.68 15.92 6.84C16.57 6.87 18.39 7.1 19.56 8.82C19.47 8.88 17.39 10.1 17.41 12.63C17.44 15.65 20.06 16.66 20.09 16.67C20.06 16.74 19.67 18.11 18.71 19.5ZM13 3.5C13.73 2.67 14.94 2.04 15.94 2C16.07 3.17 15.6 4.35 14.9 5.19C14.21 6.04 13.07 6.7 11.95 6.61C11.8 5.46 12.36 4.26 13 3.5Z"/>
+                    </svg>
+                    <span>
+                        <span class="small">Disponible en</span>
+                        App Store
+                    </span>
+                </a>
+            </div>
         </div>
     </section>
 
@@ -1017,15 +1299,7 @@
     <footer>
         <div class="footer-content">
             <div class="footer-logo">
-                <img src="logo-full.png" alt="Que Hacer Hoy">
-            </div>
-
-            <div class="footer-links">
-                <a href="index.html">Para Usuarios</a>
-                <a href="#como-funciona">¿Cómo funciona?</a>
-                <a href="#beneficios">Beneficios</a>
-                <a href="#metricas">Métricas</a>
-                <a href="#contacto">Contacto</a>
+                <img src="logo-full.png" alt="Que Hacer Hoy" class="logo-full-footer">
             </div>
 
             <div class="social-links">
@@ -1051,5 +1325,159 @@
             </div>
         </div>
     </footer>
+
+    <script>
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Video Modal Functionality
+        const videoModal = document.getElementById('videoModal');
+        const modalVideo = document.getElementById('modalVideo');
+        const closeModal = document.getElementById('closeModal');
+        const videoNotification = document.getElementById('videoNotification');
+        const closeNotification = document.getElementById('closeNotification');
+
+        // Show notification after a delay
+        function showNotification() {
+            videoNotification.classList.remove('hidden');
+        }
+
+        // Open modal when notification is clicked
+        videoNotification.addEventListener('click', (e) => {
+            if (!e.target.closest('.notification-close')) {
+                videoNotification.classList.add('hidden');
+                openVideoModal();
+            }
+        });
+
+        // Close notification without opening modal
+        closeNotification.addEventListener('click', (e) => {
+            e.stopPropagation();
+            videoNotification.classList.add('hidden');
+        });
+
+        // Open video modal
+        function openVideoModal() {
+            videoModal.classList.add('active');
+            modalVideo.play();
+        }
+
+        // Close modal
+        function closeVideoModal() {
+            videoModal.classList.remove('active');
+            modalVideo.pause();
+        }
+
+        // Event listeners
+        closeModal.addEventListener('click', closeVideoModal);
+        
+        videoModal.addEventListener('click', (e) => {
+            if (e.target === videoModal) {
+                closeVideoModal();
+            }
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (!videoModal.classList.contains('active')) return;
+            
+            if (e.key === 'Escape') {
+                closeVideoModal();
+            }
+        });
+
+        // Auto-close modal when video ends
+        modalVideo.addEventListener('ended', () => {
+            setTimeout(() => {
+                closeVideoModal();
+            }, 1000); // Wait 1 second before closing
+        });
+
+        // Initialize notification on page load
+        window.addEventListener('load', () => {
+            // Show notification after 3 seconds
+            setTimeout(showNotification, 3000);
+        });
+
+        // Auto-animate hero action words on page load
+        window.addEventListener('load', () => {
+            const words = document.querySelectorAll('.hero-actions .word');
+            const storeButtons = document.querySelectorAll('.hero .store-btn');
+            
+            // Color mapping for each word category - using the original vibrant colors for text
+            const colorMap = {
+                'word-social': '#F5C518',      // Yellow
+                'word-familia': '#1B7A4A',     // Green
+                'word-gastronomia': '#2E86AB', // Blue
+                'word-cultura': '#C92A2A',     // Red
+                'word-aventura': '#1A1A1A'     // Black (default)
+            };
+            
+            // Add hover effect for each word
+            words.forEach(word => {
+                word.addEventListener('mouseenter', function() {
+                    const categoryClass = Array.from(this.classList).find(cls => cls.startsWith('word-'));
+                    if (categoryClass && colorMap[categoryClass]) {
+                        storeButtons.forEach(btn => {
+                            btn.style.color = colorMap[categoryClass];
+                        });
+                    }
+                });
+                
+                word.addEventListener('mouseleave', function() {
+                    storeButtons.forEach(btn => {
+                        btn.style.color = '#1A1A1A';
+                    });
+                });
+            });
+            
+            // Start animation after 1 second
+            setTimeout(() => {
+                words.forEach((word, index) => {
+                    // Each word animates 0.7 seconds after the previous one
+                    setTimeout(() => {
+                        word.classList.add('animate');
+                        
+                        // Change store button text color during animation
+                        const categoryClass = Array.from(word.classList).find(cls => cls.startsWith('word-'));
+                        if (categoryClass && colorMap[categoryClass]) {
+                            storeButtons.forEach(btn => {
+                                btn.style.color = colorMap[categoryClass];
+                            });
+                        }
+                        
+                        // Remove the class and reset button color after animation completes
+                        setTimeout(() => {
+                            word.classList.remove('animate');
+                            storeButtons.forEach(btn => {
+                                btn.style.color = '#1A1A1A';
+                            });
+                        }, 600); // Duration of the animation
+                    }, index * 700); // 700ms delay between each word
+                });
+            }, 1000); // Initial 1 second delay
+        });
+    </script>
 </body>
-</html>
+</html> 
